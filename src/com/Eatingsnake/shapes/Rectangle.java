@@ -8,12 +8,17 @@ public class Rectangle extends ShapeofSnake {
     private int point2_x;
     private int point2_y;
 
+    public Rectangle() {
+    }
+
     public Rectangle(int point1_x, int point1_y, int point2_x, int point2_y) {
         this.point1_x = point1_x;
         this.point1_y = point1_y;
         this.point2_x = point2_x;
         this.point2_y = point2_y;
     }
+
+
 
     @Override
     public void draw(Graphics g){
