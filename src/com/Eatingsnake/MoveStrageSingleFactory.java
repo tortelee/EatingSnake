@@ -6,7 +6,7 @@ public class MoveStrageSingleFactory {
     private static MoveLeft moveLeft;
     private static MoveRight moveRight;
 
-    public MoveStrage getMove(String moveTo){
+    public static MoveStrage getMove(String moveTo){
         if(moveTo.equals("up")){
             if(moveUp==null){
                 moveUp = new MoveUp();

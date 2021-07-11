@@ -5,8 +5,18 @@ import java.awt.*;
 public class ShapeofSnake {
     public int point1_x;
     public int point1_y;
-    public  int point2_x;
-    public int point2_y;
+    public  int width;
+    public int height;
+
+    public ShapeofSnake() {
+    }
+
+    public ShapeofSnake(int point1_x, int point1_y, int width, int height) {
+        this.point1_x = point1_x;
+        this.point1_y = point1_y;
+        this.width = width;
+        this.height = height;
+    }
 
     public int getPoint1_x() {
         return point1_x;
@@ -24,29 +34,23 @@ public class ShapeofSnake {
         this.point1_y = point1_y;
     }
 
-    public int getPoint2_x() {
-        return point2_x;
+    public int getWidth() {
+        return width;
     }
 
-    public void setPoint2_x(int point2_x) {
-        this.point2_x = point2_x;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public int getPoint2_y() {
-        return point2_y;
+    public int getHeight() {
+        return height;
     }
 
-    public void setPoint2_y(int point2_y) {
-        this.point2_y = point2_y;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public int getWidth(){
-        return point2_x - point1_x;
-    }
 
-    public int getHeight(){
-        return point2_y - point1_y;
-    }
 
     public void draw(Graphics g){
 
