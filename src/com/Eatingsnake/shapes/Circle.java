@@ -9,6 +9,8 @@ public class Circle extends ShapeofSnake {
     private int point2_y;
 
 
+    public Circle() {
+    }
 
     @Override
     public void draw(Graphics g){

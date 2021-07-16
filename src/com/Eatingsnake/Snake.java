@@ -3,7 +3,6 @@ package com.Eatingsnake;
 import com.Eatingsnake.shapes.Rectangle;
 import com.Eatingsnake.shapes.ShapeofSnake;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,19 +16,27 @@ public class Snake {
     private boolean status;
     private static int[] direction;
     private static Snake snake;
+    private int distanceUnit=1;
 
+    public int getDistanceUnit() {
+        return distanceUnit;
+    }
+
+    public void setDistanceUnit(int distanceUnit) {
+        this.distanceUnit = distanceUnit;
+    }
 
     public Snake() {
         name = "default snake";
-        position = new ArrayList<ShapeofSnake>();
-        this.addShape(new Rectangle(30,30,30,30));
-        this.addShape(new Rectangle(60,30,30,30));
-        this.addShape(new Rectangle(90,30,30,30));
-        this.addShape(new Rectangle(120,30,30,30));
+        position = new ArrayList<>();
+        this.direction = new int[]{0,1};
+        this.addShape(new Rectangle(30,90,30,30));
+        this.addShape(new Rectangle(60,60,30,30));
+        this.addShape(new Rectangle(90,60,30,30));
+        this.addShape(new Rectangle(120,60,30,30));
     }
 
     public Snake(String name, List<ShapeofSnake> position) {
-
         this.name = name;
         this.position = position;
         this.direction = new int[]{1,1};
@@ -45,8 +52,6 @@ public class Snake {
     }
 
 
-
-
     public String getName() {
         return name;
     }
@@ -55,7 +60,7 @@ public class Snake {
         return position;
     }
 
-    public void addShape(ShapeofSnake ss){
+    public void addShape( ShapeofSnake ss){
         position.add(ss);
     }
 
@@ -75,7 +80,6 @@ public class Snake {
         }
         direction[0] = dirct[0];
         direction[1] = dirct[1];
-
     }
 
     /**
@@ -96,11 +100,11 @@ public class Snake {
             Class c =  position.get(0).getClass();
             try {
                 ShapeofSnake shapeofSnake = (ShapeofSnake) c.newInstance();
-                shapeofSnake.draw(Graphics.class.newInstance());
-                shapeofSnake.setPoint1_x(x1);
-                shapeofSnake.setPoint1_y(y1);
-                shapeofSnake.setWidth(x1+width);
-                shapeofSnake.setHeight(y1+height);
+             //   shapeofSnake.draw(Graphics.class.newInstance());
+                shapeofSnake.setPoint1_x(x1+(i+1)*direction[0]*distanceUnit);
+                shapeofSnake.setPoint1_y(y1+(i+1)*direction[1]*distanceUnit);
+                shapeofSnake.setWidth(width);
+                shapeofSnake.setHeight(height);
                 position.add(0,shapeofSnake);
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -113,7 +117,7 @@ public class Snake {
 
 
     /**
-     * 写的很丑，
+     * 写的很丑
      *
      * @param moveStrage
      * @throws Exception
@@ -131,19 +135,52 @@ public class Snake {
         int z1 = position.get(0).getWidth();
         int z2 = position.get(0).getHeight();
         //o(N) move
-        for(int i=1;i<position.size();i++){
+        for(int i=position.size()-1;i>0;i--){
             position.get(i).setPoint1_x(position.get(i-1).getPoint1_x());
             position.get(i).setPoint1_y(position.get(i-1).getPoint1_y());
             position.get(i).setWidth(position.get(i-1).getWidth());
             position.get(i).setHeight(position.get(i-1).getHeight());
         }
-        int new_x1 = x1 + moveStrage.offset()[0];
-        int new_y1 = y1 + moveStrage.offset()[1];
+        int new_x1 = x1 + moveStrage.offset()[0]*distanceUnit;
+        int new_y1 = y1 + moveStrage.offset()[1]*distanceUnit;
         // first move
         position.get(0).setPoint1_x(new_x1);
         position.get(0).setPoint1_y(new_y1);
-        position.get(0).setWidth(new_x1+position.get(0).getWidth());
-        position.get(0).setHeight(new_y1+position.get(0).getHeight());
+        position.get(0).setWidth(position.get(0).getWidth());
+        position.get(0).setHeight(position.get(0).getHeight());
+        // reset direction
+        direction[0] = offset_0;
+        direction[1] = offset_1;
+    }
+
+    /**
+     * autoMove
+     * @return
+     */
+    public void autoMove(){
+        if(direction==null){
+            return;
+        }
+        MoveStrage moveStrage;
+        if(direction[0]==1 && direction[1]==0){
+            moveStrage = MoveStrageSingleFactory.getMove("right");
+        }else if(direction[0]==-1 && direction[1]==0){
+            moveStrage = MoveStrageSingleFactory.getMove("left");
+        }else if(direction[0]==0 && direction[1]==1){
+            moveStrage = MoveStrageSingleFactory.getMove("up");
+        }else{
+            moveStrage = MoveStrageSingleFactory.getMove("down");
+        }
+        move(moveStrage);
+        logger.info("  automatically moved  ");
+    }
+
+
+    public ShapeofSnake getHead(){
+        if(position.size()==0){
+            return null;
+        }
+        return position.get(0);
     }
 
     public static Snake getInstance(){
@@ -156,9 +193,6 @@ public class Snake {
         if(snake==null){
             System.out.println("create object failed");
         }
-        if(snake==null){
-            System.out.println("create object failed");
-        }
         return snake;
     }
 
@@ -166,8 +200,10 @@ public class Snake {
         Snake zz = Snake.getInstance();
         System.out.println(zz.name);
         System.out.println(zz.getPosition().get(0).point1_x);
+
+        zz.eat(new Reward(4));
+
         System.out.println(zz.toString());
-        zz.eat(new Reward(1));
     }
 }
 

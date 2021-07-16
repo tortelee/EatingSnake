@@ -1,14 +1,17 @@
 package com.Eatingsnake.shapes;
 
 import java.awt.*;
+import java.util.logging.Logger;
 
 public class ShapeofSnake {
+    Logger logger = Logger.getLogger("snake");
     public int point1_x;
     public int point1_y;
     public  int width;
     public int height;
 
     public ShapeofSnake() {
+        logger.info("shape of snake...");
     }
 
     public ShapeofSnake(int point1_x, int point1_y, int width, int height) {

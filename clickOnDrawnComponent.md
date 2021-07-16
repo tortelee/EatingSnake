@@ -55,7 +55,7 @@ Any ideas?
     
 
 ### Referenece
-##### frame
+#### frame
 [official doc](https://docs.oracle.com/javase/tutorial/uiswing/components/frame.html)
 
 A Frame is a top-level window with a title and a border
@@ -84,7 +84,7 @@ Then you can open a a dialog or tab to display the data found.
 
 [frame.add() VS panel.add()](https://stackoverflow.com/questions/10086936/java-adding-components-to-jframe)
 
-##### class.newInstance 生成对象与多态
+#### class.newInstance 生成对象与多态
 希望通过class生成对象，且对象的类型随着动态运行时决定
 ```java
             Class c =  position.get(0).getClass();
@@ -95,3 +95,10 @@ Then you can open a a dialog or tab to display the data found.
 ```
 
 这种写法可能吗？
+
+[more discuss is here](https://www.mysmth.net/nForum/#!article/Java/436356)
+
+
+#### snake，多线程
+snake 自身会每秒运动，这个需要单独的线程控制吗？
+如果需要，那么这个线程跟主线程怎么交互？？

@@ -1,9 +1,8 @@
 package com.Eatingsnake.UI;
 
-import com.Eatingsnake.Control.Controler;
+import com.Eatingsnake.Control.Controller;
 import com.Eatingsnake.Snake;
 import com.Eatingsnake.shapes.ShapeofSnake;
-import exercise.MouseInput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
 
 public class Window extends JFrame {
     private Logger logger = Logger.getLogger("snake");
-    private Controler controler;
+    private Controller controler;
     public Snake snake;   // 以后将会被删去
 
     private Color[] colors = new Color[10];
@@ -24,11 +23,11 @@ public class Window extends JFrame {
         colors[2] = Color.YELLOW;
     }
 
-    public Controler getControler() {
+    public Controller getControler() {
         return controler;
     }
 
-    public void setControler(Controler controler) {
+    public void setControler(Controller controler) {
         this.controler = controler;
     }
 
@@ -62,6 +61,12 @@ public class Window extends JFrame {
         }
     }
 
+    /**
+     * 画边界
+     * 画蛇
+     * 画
+     * @param g
+     */
     @Override
     public void paint(Graphics g){
         paintSnake(g,snake);
@@ -77,6 +82,7 @@ public class Window extends JFrame {
         //Location 位置 RelativeTo相对于
         frame.setLocationRelativeTo(null);//使当前窗口居中
         frame.setVisible(true);
+
 
 
         // set and get
