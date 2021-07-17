@@ -53,16 +53,26 @@ public class Controller implements Runnable {
     /**
      * 吃到奖励
      */
-    public boolean isCrashReward(){
+    public Reward isCrashReward(){
+        Reward res = null;
         synchronized (rewardControl){
             List<Reward> rewardList = rewardControl.rewardList;
+            ShapeofSnake head = snake.getHead();
             for(int i=0; i<rewardList.size(); i++){
                 Reward reward = rewardList.get(i);
-                if(reward.point1_x==)
+                if(reward.point1_x==head.point1_x && reward.point1_y == head.point1_y){
+                    res = reward;
+                }
             }
         }
-
+        return res;
     }
+
+    /**
+     * 响应键盘事件.
+     * 线程直接被主线程调用？ 合理么？
+     */
+    public void
 
     /**
      *
