@@ -16,7 +16,7 @@ public class Snake {
     private boolean status;
     private static int[] direction;
     private static Snake snake;
-    private int distanceUnit=1;
+    private int distanceUnit=30;
 
     public int getDistanceUnit() {
         return distanceUnit;
@@ -40,6 +40,18 @@ public class Snake {
         this.name = name;
         this.position = position;
         this.direction = new int[]{1,1};
+    }
+
+    /**
+     * 垂直才会改变方向
+     * @param newDirt
+     * @return
+     */
+    public boolean canChange(int[] newDirt){
+        if(newDirt[0]*direction[0]+newDirt[1]*direction[1] !=0){
+            return false;
+        }
+        return true;
     }
     @Override
     public String toString(){

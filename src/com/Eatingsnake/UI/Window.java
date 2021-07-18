@@ -1,11 +1,15 @@
 package com.Eatingsnake.UI;
 
 import com.Eatingsnake.Control.Controller;
+import com.Eatingsnake.Control.RewardControl;
 import com.Eatingsnake.Snake;
+import com.Eatingsnake.keyboardEvent.MyKeyBoardEvent;
 import com.Eatingsnake.shapes.ShapeofSnake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -16,11 +20,23 @@ public class Window extends JFrame {
 
     private Color[] colors = new Color[10];
     private static int count = 0;
+    private KeyAdapter keyAdapter;
+
 
     public Window() throws HeadlessException {
         colors[0] = Color.BLACK;
         colors[1] = Color.RED;
         colors[2] = Color.YELLOW;
+    }
+
+    public KeyAdapter getKeyAdapter() {
+        return keyAdapter;
+    }
+
+    public void setKeyAdapter(KeyAdapter keyAdapter) {
+        this.keyAdapter = keyAdapter;   // 目前没看出有啥用
+
+        this.addKeyListener(keyAdapter);  // 传给框架
     }
 
     public Controller getControler() {
@@ -29,6 +45,15 @@ public class Window extends JFrame {
 
     public void setControler(Controller controler) {
         this.controler = controler;
+    }
+
+    /**
+     * 将mouse的事件，传递给controller层
+     *
+     */
+    public void responseMouse(KeyEvent e){
+        logger.info("--->mouse event-->windows --> controller");
+        controler.responseKey(e);
     }
 
     public void paintRect(Graphics g, ShapeofSnake shape){
@@ -54,6 +79,10 @@ public class Window extends JFrame {
 
         String msg = "snake size is "+pos.size();
         logger.info(msg);
+
+        //清空 之前画的，用白色, 这样写不好
+        g.setColor(Color.white);
+        g.fillRect(0,0,500,500);
 
         for (ShapeofSnake shape:pos
              ) {
@@ -83,8 +112,6 @@ public class Window extends JFrame {
         frame.setLocationRelativeTo(null);//使当前窗口居中
         frame.setVisible(true);
 
-
-
         // set and get
        // frame.getM().setMyRectangle(frame.r);
         Snake snake2 = Snake.getInstance();
@@ -94,11 +121,33 @@ public class Window extends JFrame {
 
         frame.snake = snake2;
 
-        frame.repaint();
+
+
+
+
+        // controller
+        RewardControl rewardControl = new RewardControl();
+        Controller c = new Controller(frame,snake2,rewardControl);
+        Thread t = new Thread(c);
+        t.start();
+
+        frame.setControler(c);
+
+        // keyboard listener
+        frame.setKeyAdapter(new MyKeyBoardEvent(frame));
+        while(true) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            frame.repaint();
+            frame.requestFocus();
+        }
 
         //     frame.add(new Button("ok"));
 
         //    frame.addMouseListener(m);
-        frame.requestFocus();
+
     }
 }
