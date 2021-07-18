@@ -51,8 +51,39 @@ Any ideas?
         - 传递鼠标信息
         - 传递键盘信息
   
+### 多线程
+[example1](https://www.javatpoint.com/inter-thread-communication-example)
+ 
+ Inter-thread communication or Co-operation is all about 
+ allowing synchronized threads to communicate with each other.
 
-    
+Cooperation (Inter-thread communication) is a mechanism in which a thread
+ is paused running in its critical section and another thread is allowed to 
+ enter (or lock) in the same critical section to be executed.
+ It is implemented by following methods of Object class:
+
+- wait
+- notify
+- notifyAll
+###### wait method
+ Causes current thread to release the lock and 
+ wait until either another thread invokes the 
+ otify() method or the notifyAll() method for this object, 
+ or a specified amount of time has elapsed.
+
+The current thread must own this object's monitor, 
+so it must be called from the synchronized method only otherwise 
+it will throw exception.
+
+###### notify() method
+Wakes up a single thread that is waiting on this object's monitor.
+ If any threads are waiting on this object, 
+ one of them is chosen to be awakened.
+ The choice is arbitrary and occurs at the discretion of the implementation
+ 
+###### understand the process of inter-thread communication
+see link:
+[example1](https://www.javatpoint.com/inter-thread-communication-example)
 
 ### Referenece
 #### frame

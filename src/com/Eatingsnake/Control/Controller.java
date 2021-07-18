@@ -71,8 +71,9 @@ public class Controller implements Runnable {
     /**
      * 响应键盘事件.
      * 线程直接被主线程调用？ 合理么？
+     *
      */
-    public void
+
 
     /**
      *
